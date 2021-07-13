@@ -28,7 +28,7 @@ func PostTodo(c echo.Context) error {
 	var todo Todo
 	err := c.Bind(&todo)
 	if err != nil {
-		log.Println(err)
+		return c.String(500, "terjadi error.")
 	}
 
 	return c.String(201, "todo telah ditambahkan")
