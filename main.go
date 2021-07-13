@@ -7,8 +7,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+var todos = []Todo{}
+
 func main() {
 	router := echo.New()
+	router.POST("/todo", PostTodo)
 
 	s := &http.Server{
 		Addr:    ":1234",
@@ -19,4 +22,14 @@ func main() {
 	if err := s.ListenAndServe(); err != nil {
 		log.Println(err)
 	}
+}
+
+func PostTodo(c echo.Context) error {
+	var todo Todo
+	err := c.Bind(&todo)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return c.String(201, "todo telah ditambahkan")
 }
